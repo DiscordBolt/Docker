@@ -1,6 +1,8 @@
 version: '3.6'
 services:
   nginx: 
+    depends_on:
+      - jenkins-master
     build: ./nginx
     restart: always
     ports:
@@ -9,8 +11,6 @@ services:
       - jenkins-net
 
   jenkins-master:
-    depends_on:
-      - nginx
     build: ./jenkins-master
     restart: always
     ports:
