@@ -19,10 +19,6 @@ services:
       - jenkins-data:/var/jenkins_home
     networks:
       - jenkins-net
-    deploy:
-      limits:
-        cpus: '1.00'
-        memory: '2.00g'
 volumes:
   jenkins-data:
 networks:
