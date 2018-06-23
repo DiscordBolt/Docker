@@ -1,0 +1,29 @@
+version: '3.6'
+services:
+  nginx: 
+    build: ./nginx
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      - jenkins-net
+
+  jenkins:
+    depends_on:
+      - nginx
+    build: ./jenkins-master
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - jenkins-data:/var/jenkins_home
+    networks:
+      - jenkins-net
+    deploy:
+      limits:
+        cpus: '1.00'
+        memory: '2.00g'
+volumes:
+  jenkins-data:
+networks:
+  jenkins-net:
