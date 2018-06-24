@@ -12,6 +12,8 @@ services:
 
   jenkins-master:
     build: ./jenkins-master
+    environment:
+      - JENKINS_OPTS="--prefix=/jenkins"
     restart: always
     volumes:
       - jenkins-data:/var/jenkins_home
