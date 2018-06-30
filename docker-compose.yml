@@ -20,7 +20,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - nginx-net
-volumes:	
+volumes:
   jenkins-data:
 networks:
   nginx-net:
