@@ -26,12 +26,38 @@ services:
     restart: always
     volumes:
       - mongodb-data:/data/db
+    networks:
+      - database-net
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     command: mongod --smallfiles
+  
+  logstash:
+    build: ./logstash
+    restart: always
+    networks:
+      - database-net
+
+  elasticsearch:
+    build: ./elasticsearch
+    restart: always
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - database-net
+    environment:
+     - bootstrap.memory_lock=true
+     - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
 volumes:
   jenkins-data:
   mongodb-data:
+  elasticsearch-data:
+    driver: local
 networks:
   nginx-net:
+  database-net:
