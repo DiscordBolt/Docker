@@ -3,6 +3,7 @@ services:
   nginx: 
     depends_on:
       - jenkins-master
+      - kibana
     build: ./nginx
     restart: always
     ports:
@@ -33,26 +34,42 @@ services:
       - MONGO_LOG_DIR=/dev/null
     command: mongod --smallfiles
   
-  logstash:
-    build: ./logstash
-    restart: always
-    networks:
-      - database-net
-
   elasticsearch:
     build: ./elasticsearch
     restart: always
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
     networks:
-      - database-net
+      - elastic-net
     environment:
-     - bootstrap.memory_lock=true
-     - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - es.enforce.bootstrap.checks=true
+      - ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      - bootstrap.memory_lock=true
     ulimits:
       memlock:
         soft: -1
         hard: -1
+        
+  logstash:
+    build: ./logstash
+    restart: always
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elastic-net
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    build: ./kibana
+    ports:
+      - "5601:5601"
+    networks:
+      - elastic-net
+      - nginx-net
+    depends_on:
+      - elasticsearch
+
 volumes:
   jenkins-data:
   mongodb-data:
@@ -60,4 +77,4 @@ volumes:
     driver: local
 networks:
   nginx-net:
-  database-net:
+  elastic-net:
