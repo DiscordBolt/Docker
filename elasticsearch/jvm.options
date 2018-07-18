@@ -1,0 +1,3 @@
+-Xms1g 
+-Xmx1g 
+-XX:HeapDumpPath=/var/lib/elasticsearch/heap.dump

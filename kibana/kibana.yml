@@ -5,3 +5,13 @@
 server.name: kibana
 server.host: "0"
 elasticsearch.url: http://elasticsearch:9200
+xpack.security.enabled: false
+xpack.monitoring.ui.container.elasticsearch.enabled: true
+
+xpack.monitoring.enabled: true
+
+# Do not send data to elastic
+xpack.xpack_main.telemetry.enabled: false
+
+# Collect data about containers rather than overall system
+xpack.monitoring.ui.container.elasticsearch.enabled: true

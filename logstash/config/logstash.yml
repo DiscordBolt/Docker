@@ -5,3 +5,7 @@
 node.name: "Logstash Docker"
 http.host: "0.0.0.0"
 path.config: /usr/share/logstash/pipeline
+
+# For Monitoring metrics in Kibana
+xpack.monitoring.enabled: true
+xpack.monitoring.elasticsearch.url: http://elasticsearch:9200

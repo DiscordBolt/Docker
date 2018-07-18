@@ -18,7 +18,7 @@ services:
     restart: always
     volumes:
       - jenkins-data:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
+#      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - nginx-net
   
@@ -28,7 +28,7 @@ services:
     volumes:
       - mongodb-data:/data/db
     networks:
-      - database-net
+      - mongo-net
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
@@ -38,23 +38,24 @@ services:
     build: ./elasticsearch
     restart: always
     volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
+      - elasticsearch-data:/var/lib/elasticsearch/data
     networks:
       - elastic-net
-    environment:
-      - es.enforce.bootstrap.checks=true
-      - ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      - bootstrap.memory_lock=true
     ulimits:
       memlock:
         soft: -1
         hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
         
   logstash:
     build: ./logstash
     restart: always
     environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      LS_JAVA_OPTS: "-Xmx512m -Xms512m"
     networks:
       - elastic-net
     depends_on:
@@ -62,8 +63,11 @@ services:
 
   kibana:
     build: ./kibana
+    restart: always
     ports:
-      - "5601:5601"
+      - 5601:5601
+#    environment:
+#      - SERVER_HOST=0.0.0.0
     networks:
       - elastic-net
       - nginx-net
@@ -78,3 +82,4 @@ volumes:
 networks:
   nginx-net:
   elastic-net:
+  mongo-net:
