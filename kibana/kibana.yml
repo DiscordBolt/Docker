@@ -5,7 +5,7 @@
 server.name: kibana
 server.host: "0"
 server.basePath: "/kibana"
-server.host: "bolt.ajpappas.net"
+#server.host: "bolt.ajpappas.net"
 #server.rewriteBasePath: true
 elasticsearch.url: http://elasticsearch:9200
 xpack.security.enabled: false
