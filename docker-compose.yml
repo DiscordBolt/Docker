@@ -3,6 +3,7 @@ services:
   nginx: 
     depends_on:
       - jenkins-master
+      - kibana
     build: ./nginx
     restart: always
     ports:
@@ -26,12 +27,55 @@ services:
     restart: always
     volumes:
       - mongodb-data:/data/db
+    networks:
+      - mongo-net
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     command: mongod --smallfiles
+  
+  elasticsearch:
+    build: ./elasticsearch
+    restart: always
+    volumes:
+      - elasticsearch-data:/var/lib/elasticsearch/data
+    networks:
+      - elastic-net
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+        
+  logstash:
+    build: ./logstash
+    restart: always
+    environment:
+      LS_JAVA_OPTS: "-Xmx512m -Xms512m"
+    networks:
+      - elastic-net
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    build: ./kibana
+    restart: always
+    networks:
+      - elastic-net
+      - nginx-net
+    depends_on:
+      - elasticsearch
+
 volumes:
   jenkins-data:
   mongodb-data:
+  elasticsearch-data:
+    driver: local
 networks:
   nginx-net:
+  elastic-net:
+  mongo-net:
