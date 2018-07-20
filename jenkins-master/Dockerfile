@@ -1,4 +1,4 @@
-FROM jenkinsci/blueocean:1.7.0
+FROM jenkinsci/blueocean:1.7.1
 
 # Install Docker binaries
 USER root
