@@ -83,3 +83,12 @@ networks:
   nginx-net:
   elastic-net:
   mongo-net:
+
+secrets: 
+  discord_token:
+    file: secrets/discord_token.txt
+  docker_username:
+    file: secrets/docker_username.txt
+  docker_password:
+    file: secrets/docker_password.txt
+

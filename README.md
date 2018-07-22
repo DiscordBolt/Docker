@@ -3,12 +3,10 @@
 Setup:
   1. Add `private.key` and `certificate.crt` to nginx/conf/ssl
   2. Add `.htpasswd` to nginx/
-  3. `printf "<DISCORD_TOKEN>" | docker secret create discord_token -`
-  4. `printf "<DOCKER_USERNAME>" | docker secret create docker_username -`
-  5. `printf "<DOCKER_PASSWORD>" | docker secret create docker_password -`
-  6. `docker-compose build`
-  7. `docker-compose up -d`
-  8. Jenkins Setup
+  3. Create `secrets/*.txt` files
+  4. `docker-compose build`
+  5. `docker-compose up -d`
+  6. Jenkins Setup
     1. Go to `HOST/jenkins`
 	2. Get the password from `docker exec docker_jenkins-master_1 cat /var/jenkins_home/secrets/initialAdminPassword`
 	3. Install suggested plugins
