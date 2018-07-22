@@ -21,6 +21,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - nginx-net
+    secrets:
+     - discord_token
+     - docker_username
+     - docker_password
   
   mongodb:
     build: ./mongodb
