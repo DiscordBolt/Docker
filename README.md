@@ -3,7 +3,6 @@
 Setup:
   1. Add `private.key` and `certificate.crt` to nginx/conf/ssl
   2. Add `.htpasswd` to nginx/
-  3. Create `secrets/*.txt` files
   4. Create `watchtower/docker-login.env` with specified login info
   5. `docker login`
   6. `docker-compose build`
