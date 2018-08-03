@@ -21,10 +21,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - nginx-net
-    secrets:
-     - discord_token
-     - docker_username
-     - docker_password
   
   mongodb:
     build: ./mongodb
@@ -73,6 +69,28 @@ services:
       - nginx-net
     depends_on:
       - elasticsearch
+      
+  boltbot:
+    image: techtony96/boltbot
+    depends_on:
+      - nginx
+      - mongodb
+      - logstash
+    restart: always
+    networks:
+      - nginx-net
+      - elastic-net
+      - mongo-net
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    
+  watchtower:
+    image: v2tec/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - ./watchtower/docker-login.env:
+    command: --interval 60 --cleanup --label-enable
 
 volumes:
   jenkins-data:
@@ -83,12 +101,3 @@ networks:
   nginx-net:
   elastic-net:
   mongo-net:
-
-secrets: 
-  discord_token:
-    file: secrets/discord_token.txt
-  docker_username:
-    file: secrets/docker_username.txt
-  docker_password:
-    file: secrets/docker_password.txt
-
