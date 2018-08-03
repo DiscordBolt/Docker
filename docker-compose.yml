@@ -89,7 +89,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     env_file:
-      - ./watchtower/docker-login.env:
+      - ./watchtower/docker-login.env
     command: --interval 60 --cleanup --label-enable
 
 volumes:
