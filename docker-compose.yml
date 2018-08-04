@@ -4,6 +4,7 @@ services:
     depends_on:
       - jenkins-master
       - kibana
+      - boltbot
     build: ./nginx
     restart: always
     ports:
@@ -73,7 +74,6 @@ services:
   boltbot:
     image: techtony96/boltbot
     depends_on:
-      - nginx
       - mongodb
       - logstash
     restart: always
