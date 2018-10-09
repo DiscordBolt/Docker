@@ -1,0 +1,4 @@
+nginx/conf/ssl/private.key
+nginx/conf/ssl/certificate.crt
+nginx/.htpasswd
+watchtower/docker-login.env
