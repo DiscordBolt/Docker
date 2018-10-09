@@ -1,5 +1,7 @@
 # Docker
 
+Make sure to keep these files secret and do NOT commit these to Github.
+
 Setup:
   1. Add `private.key` and `certificate.crt` to nginx/conf/ssl
   2. Add `.htpasswd` to nginx/
