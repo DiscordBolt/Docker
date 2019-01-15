@@ -43,6 +43,17 @@ services:
       - mongo-net
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+      
+  boltbot-dev:
+    image: techtony96/boltbot:dev-latest
+    depends_on:
+      - mongodb
+    restart: always
+    networks:
+      - nginx-net
+      - mongo-net
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
   watchtower:
     image: v2tec/watchtower
