@@ -20,7 +20,8 @@ Setup:
 	6. Set Jenkins secrets  
 		1. dockerPassword  
 		2. discordToken  
-		3. discordWebhook  
-		4. twitchClientId  
+		3. discordTokenDev
+		4. discordWebhook  
+		5. twitchClientId  
 	6. Open Blue Ocean and create pipelines  
 	7. Use the Jenkins Github user  
